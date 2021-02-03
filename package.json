@@ -1,8 +1,8 @@
 {
-  "name": "{{name}}",
+  "name": "yaoxfly-simple-pc-frame",
   "version": "0.1.0",
   "author": "yaoxfly",
-  "description": "{{description}}",
+  "description": "yaoxfly-simple-pc-frame",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
