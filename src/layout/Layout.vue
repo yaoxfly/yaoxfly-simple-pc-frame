@@ -205,10 +205,8 @@ export default {
 }
 </script>
 
-<style lang='less' >
-.layout {
-  &__main {
-    display: flex;
-  }
+<style  >
+.layout__main {
+  display: flex;
 }
 </style>

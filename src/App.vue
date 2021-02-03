@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<style lang="less">
+<style >
 body {
   overflow: hidden;
   background: #f5f7fa;
