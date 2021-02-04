@@ -67,7 +67,11 @@ export default {
         type: 'item',
         text: '知识产权'
       },
-
+      {
+        path: 'dialog5',
+        type: 'item',
+        text: '质量监管'
+      },
       {
         path: 'http://www.baidu.com1',
         type: 'item',
@@ -76,7 +80,7 @@ export default {
       {
         path: 'http://www.baidu.com测试3',
         type: 'submenu', // 有子菜单的
-        text1: '应用支撑',
+        text: '应用支撑',
         children: [
           {
             path: 'http://www.baidu.com3331',
