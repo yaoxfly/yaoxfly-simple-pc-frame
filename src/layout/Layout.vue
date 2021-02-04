@@ -194,7 +194,7 @@ export default {
   },
   methods: {
     rightContentButton (emit) {
-      onclose.log(emit)
+      console.log(emit)
     },
     navButton (emit) {
       console.log(emit, 11)

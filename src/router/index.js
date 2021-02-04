@@ -14,7 +14,6 @@ let routes = [
         name: 'About',
         component: () => import('@/views/About.vue')
       }
-
     ]
   }
 ]
