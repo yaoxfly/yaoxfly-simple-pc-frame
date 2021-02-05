@@ -199,12 +199,12 @@ export default {
     navButton (emit) {
       console.log(emit, 11)
     },
-    select () {
+    select () { },
+    close () { }
+  },
 
-    },
-    close () {
-
-    }
+  mounted () {
+    console.log(this.$store.state.test.modules)
   }
 }
 </script>

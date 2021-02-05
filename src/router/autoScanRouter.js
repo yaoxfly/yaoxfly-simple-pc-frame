@@ -2,7 +2,6 @@
  * @author yx
  * @param  {Array}  routes 路由数组
  * @param  {Object}  config 配置 father 全局指定默认的父路由，isChildrenRouter全局指定路由是否是子路由
- * @return {Object} 返回请求结果
  */
 export default function (routes, config) {
     const { father = 'Layout', isChildrenRouter = true } = config || {}
