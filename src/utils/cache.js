@@ -32,7 +32,7 @@ const cache = {
     },
 
     /**
-     * @description 清空缓存
+     * @description 清空所有缓存
      * @author  yx
      */
     clearCache () {
