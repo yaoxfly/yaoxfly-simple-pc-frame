@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '../layout/Layout.vue'
 import autoScanRouter from './autoScanRouter'
+import './repeatRoute'
 Vue.use(VueRouter)
 let routes = [
   {
