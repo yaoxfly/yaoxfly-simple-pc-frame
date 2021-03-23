@@ -129,12 +129,12 @@ export default {
         },
         {
           type: 'icon',
-          value: require('@/assets/image/header/info.png'),
-          number: 8 // 在图标右上方添加number
+          value: require('@/assets/image/header/info.png')
         },
         {
           type: 'icon',
-          value: require('@/assets/image/header/head_sculpture.png')
+          value: require('@/assets/image/header/head_sculpture.png'),
+          number: 99// 在图标右上方添加number
         },
         {
           value: '李四',
