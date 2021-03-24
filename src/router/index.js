@@ -8,12 +8,15 @@ let routes = [
   {
     path: '/',
     name: 'Layout',
+    redirect: '/home',
     component: Layout,
     children: [
       {
-        path: '/about',
-        name: 'About',
-        component: () => import('@/views/About.vue')
+        path: '/home',
+        name: 'Home',
+        text: '主页',
+        icon: 'el-icon-location',
+        component: () => import('@/views/Home.vue')
       }
     ]
   }
@@ -25,5 +28,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+export { routes }
 export default router

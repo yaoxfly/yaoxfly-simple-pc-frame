@@ -15,8 +15,7 @@
     <div class="layout__main">
       <section class="">
         <eve-menu
-          @select="select"
-          :data="data"
+          :data="menuData"
           :collapse="collapse"
           :width="width"
           ref="menu"
@@ -25,9 +24,9 @@
       </section>
 
       <section class="right">
-        <eve-breadcrumb ref="breadcrumd" :menu="data" class="bred">
+        <eve-breadcrumb ref="breadcrumd" :menu="menuData" class="bred">
         </eve-breadcrumb>
-        <!-- <eve-tag-views ref="tagView" @close="close"> </eve-tag-views> -->
+        <!-- <eve-tag-views ref="tagView" > </eve-tag-views> -->
         <eve-main>
           <router-view />
         </eve-main>
@@ -37,6 +36,7 @@
 </template>
 
 <script>
+import { routes } from '../router/index'
 export default {
   name: 'Layout',
   data () {
@@ -141,75 +141,71 @@ export default {
           dialog: true // 设置这个属性后,点击这个按钮会弹出对话框,默认是false
         }
       ],
-
       // 菜单数据
-      data: [
-        {
-          type: 'submenu',
-          text: '关于',
-          icon: 'el-icon-location',
-          children: [
-            {
-              path: 'about',
-              type: 'item', // 子菜单
-              icon: 'el-icon-location',
-              text: '关于'
-            }
-          ]
-        },
-        {
-          path: '/',
-          type: 'item',
-          icon: 'el-icon-location',
-          text: '开始'
-        },
-        {
-
-          type: 'submenu',
-          text: '测试',
-          icon: 'el-icon-location',
-          children: [
-            {
-
-              type: 'submenu', // 子菜单
-              icon: 'el-icon-location',
-              text: '测试1-1',
-              children: [
-                {
-                  path: '/home',
-                  type: 'item', // 子菜单
-                  icon: 'el-icon-location',
-                  text: '主页'
-                }
-              ]
-            }
-          ]
-        }
-      ],
+      menuData: [],
       // 菜单宽度
       width: 200,
       // 是否收缩
       collapse: false
     }
   },
+
+  mounted () {
+    this.getMenu()
+    console.log(this.$store.state.test.modules)
+  },
+
   methods: {
     rightContentButton (emit) {
       console.log(emit)
     },
+
     navButton (emit) {
       console.log(emit, 11)
     },
-    select () { },
-    close () { }
-  },
 
-  mounted () {
-    console.log(this.$store.state.test.modules)
+    /** @description  根据路由获取菜单数据(only二级)
+     * @author yx
+     */
+    getMenu () {
+      const arr = routes.filter(item => item.name === 'Layout')
+      const route = JSON.parse(JSON.stringify(arr[0].children))
+      const tempMenuData = []
+      route.forEach(element => {
+        const { meta: { menu } = {} } = element || {}
+        const item = {
+          icon: element.icon,
+          text: element.text,
+          type: 'item',
+          path: element.path
+        }
+        if (menu) {
+          menu.children = menu.children || []
+          menu.children.push(item)
+          tempMenuData.push(menu)
+        } else {
+          tempMenuData.push(item)
+        }
+      })
+      const keyMap = {}
+      tempMenuData.forEach(el => {
+        if (keyMap[el.text]) {
+          keyMap[el.text].children.push(...el.children)
+        } else {
+          keyMap[el.text] = el
+        }
+      })
+      const menuData = []
+      Object.values(keyMap).forEach(el => [
+        menuData.push(el)
+      ])
+      this.menuData = menuData
+    }
   }
 }
-</script>
 
-<style  >
+</script>
+<style>
 .layout__main {
   display: flex;
 }

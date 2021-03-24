@@ -3,7 +3,6 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
 const chunks = ['vendors', 'index']
 module.exports = {
-    // 配置这个骨架屏不生效
     pages: {
         index: {
             // page 的入口
