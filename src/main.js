@@ -10,6 +10,7 @@ import 'eve-ui/lib/eve-ui.css'
 Vue.use(ElementUI)
 Vue.use(eveUi)
 Vue.config.productionTip = false
+process.env.NODE_ENV !== 'production' && require('@/mock')
 new Vue({
   router,
   store,

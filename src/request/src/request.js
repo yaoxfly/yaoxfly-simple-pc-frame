@@ -211,105 +211,120 @@ class Request {
           interceptionAfter(err.response)
           resolve(err)
         })
-
       }
     )
   }
 
   /** 请求类可用post、get、delete、put等方法，次方法集合了deleteData、postForm、getFile方法
    * @param  {String}  url api接口地址
-   * @param  {Object/String}  params 传到后台的参数
+   * @param  {Object}  params 传到后台的参数
    * @param  {String}  type 是get 还是post 请求
    * @param  {Object}  config  配置项 里包括   loading 是否开启loading动画 qs 是否开启qs转换 headers 添加请求头--可用来传递参数
    * @return {Object} 返回请求结果
    */
-  requests = (url, params = '', type = 'post', config = {}) => {
-    //passParamWay(传参方式):data、param
-    const { loading = true, qs = true, headers = {}, responseType = '', passParamWay = 'params' } = config
+  requests = (url, params = {}, type = 'get', config = {}) => {
+    //paramType(传参方式):data、param
+    const { loading = true, qs = true, headers = {}, responseType = '', paramType = 'params' } = config
     this.loading = loading
     return new Promise((resolve, reject) => {
-      if (this.type === 'axios') {
-        const param = {
-          method: type,
-          url: url,
-          responseType: responseType,
-          paramsSerializer: params => {
-            return this.qs && qs ? this.qs.stringify(params) : params
-          },
-          headers: headers
-        }
-        const keyMap = {
-          'params': () => {
-            Object.assign(arg, {
-              params: params,
-            })
-          },
-          //用data方式传参的请求
-          'data': () => {
-            Object.assign(arg, {
-              data: params,
-            })
-          },
-          //用form传参方式的发起请求 postForm集合版
-          'form': () => {
-            Object.assign(arg, {
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              }
-            })
+      const requestType = {
+        axios: () => {
+          const arg = {
+            method: type,
+            url: url,
+            responseType: responseType,
+            paramsSerializer: params => {
+              return this.qs && qs ? this.qs.stringify(params) : params
+            },
+            headers: headers
           }
+          const keyMap = {
+            //用form传参方式的发起请求postForm集合版
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+            },
+            //用data方式传参的请求
+            'data': () => {
+              Object.assign(arg, {
+                data: params,
+              })
+            },
+          }
+          keyMap[paramType]()
+          this.request
+            .request(arg)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              reject(error)
+            })
+        },
+        fly: () => {
+          this.request
+            .request(url, this.qs && qs ? this.qs.stringify(params) : params, {
+              method: type,
+              headers: headers,
+              responseType: responseType,
+            })
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              reject(error)
+            })
         }
-        keyMap[passParamWay]()
-        this.request
-          .request(param)
-          .then(response => {
-            resolve(response)
-          })
-          .catch(error => {
-            reject(error)
-          })
-        return
       }
-      this.request
-        .request(url, this.qs && qs ? this.qs.stringify(params) : params, {
-          method: type,
-          headers: headers,
-          responseType: responseType,
-        })
-        .then(response => {
-          resolve(response)
-        })
-        .catch(error => {
-          reject(error)
-        })
+      requestType[this.type]()
     })
   };
+
+
 
   /**
    * 请求类 get方法 多用来获取数据 get 方法默认关闭loading
    * @param {String} url api接口地址
-   * @param  {Object/String}  params 传到后台的参数
+   * @param  {Object}  params 传到后台的参数
    * @param {Object} config  配置项,包括 loading:是否开启loading动画;qs:是否开启qs转换
    * @return {Object} 返回请求结果
    */
-  get = (url, params = '', config = {}) => {
+  get = (url, params = {}, config = {}) => {
     //responseType设置为blob可以下载文件
-    const { loading = false, qs = true, responseType = '' } = config
+    const { loading = false, qs = true, responseType = '', paramType = 'params' } = config
     this.loading = loading
     return new Promise((resolve, reject) => {
-      let arg = ''
-      if (this.type === 'axios') {
-        arg = {
-          params: params,
-          responseType: responseType,
-          paramsSerializer: params => {
-            return this.qs && qs ? this.qs.stringify(params) : params
+      let arg = '' //参数
+      const requestType = {
+        axios: () => {
+          arg = {
+            responseType: responseType,
+            paramsSerializer: params => {
+              return this.qs && qs ? this.qs.stringify(params) : params
+            }
           }
+          const keyMap = {
+            //用form传参方式,数据拼接在url
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+            },
+            //用data方式传参的请求，数据拼接在body里
+            'data': () => {
+              Object.assign(arg, {
+                data: params,
+              })
+            },
+          }
+          keyMap[paramType]()
+        },
+        fly: () => {
+          arg = this.qs && qs ? this.qs.stringify(params) : params
         }
-      } else {
-        arg = this.qs && qs ? this.qs.stringify(params) : params
       }
-
+      requestType[this.type]()
       this.request
         .get(url, arg)
         .then(response => {
@@ -321,109 +336,220 @@ class Request {
     })
   };
 
+
   /**
-   * 请求类 post 方法 多用来新增数据
+   * 请求类post方法 多用来新增数据
    * @param {String} url api接口地址
-   * @param  {Object/String}  params 传到后台的参数
+   * @param  {Object}  params 传到后台的参数
    * @param {Object} config 配置项,包括 loading:是否开启loading动画;qs:是否开启qs转换
    * @return {Object} 返回请求结果
    */
-  post = (url, params = '', config = {}) => {
-    const { loading = true, qs = true } = config;
+  post = (url, params = {}, config = {}) => {
+    const { loading = false, qs = true, responseType = '', paramType = 'data' } = config
     this.loading = loading
     return new Promise((resolve, reject) => {
-      this.request
-        .post(url, params)
-        .then(response => {
-          resolve(response)
-        })
-        .catch(error => {
-          reject(error)
-        })
+      const requestType = {
+        axios: () => {
+          const arg = {
+            method: 'post',
+            url: url,
+            responseType: responseType,
+            paramsSerializer: params => {
+              return this.qs && qs ? this.qs.stringify(params) : params
+            }
+          }
+          const keyMap = {
+            //用form传参方式,数据拼接在url
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+            },
+            //用data方式传参的请求，数据拼接在body里
+            'data': () => {
+              Object.assign(arg, {
+                data: params,
+              })
+            },
+          }
+          keyMap[paramType]()
+          this.request(arg)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              reject(error)
+            })
+        },
+        fly: () => {
+          this.request
+            .post(url, params)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              reject(error)
+            })
+        }
+      }
+      requestType[this.type]()
     })
   };
+
 
 
   /**
    * 请求类 put 方法 多用来修改数据（需要传递所有字段，相当于全部更新）
    * @param {String} url api接口地址
-   * @param  {Object/String}  params 传到后台的参数
+   * @param  {Object}  params 传到后台的参数
    * @param {Object} config 配置项,包括 loading:是否开启loading动画;qs:是否开启qs转换
    * @return {Object} 返回请求结果
    */
-  put = (url, params = '', config = {}) => {
-    const { loading = true, qs = false } = config
+  put = (url, params = {}, config = {}) => {
+    const { loading = true, qs = false, paramType = 'data' } = config
     this.loading = loading
     return new Promise((resolve, reject) => {
-      this.request
-        .put(url, this.qs && qs ? this.qs.stringify(params) : params)
-        .then(response => {
-          resolve(response)
-        })
-        .catch(error => {
-          reject(error)
-        })
+      const requestType = {
+        axios: () => {
+          const arg = {
+            method: 'put',
+            url: url,
+          }
+          const keyMap = {
+            //用form传参方式,数据拼接在url
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+            },
+            //用data方式传参的请求，数据拼接在body里
+            'data': () => {
+              Object.assign(arg, {
+                data: params,
+              })
+            },
+          }
+          keyMap[paramType]()
+          this.request(arg)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              reject(error)
+            })
+        },
+        fly: () => {
+          this.request
+            .put(url, this.qs && qs ? this.qs.stringify(params) : params)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              reject(error)
+            })
+        }
+      }
+      requestType[this.type]()
     })
   };
+
 
   /**
    * 请求类 patch 方法 多用来修改数据，是在put的基础上新增改进的，适用于局部更新，比如我只想修改用户名，只传用户名的字段就ok了，而不需要像put一样把所有字段传过去
    * @param {String} url api接口地址
-   * @param  {Object/String}  params 传到后台的参数
+   * @param  {Object}  params 传到后台的参数
    * @param {Object} config 配置项,包括 loading:是否开启loading动画;qs:是否开启qs转换
    * @return {Object} 返回请求结果
    */
-  patch = (url, params = '', config = {}) => {
-    const { loading = true, qs = true } = config
+  patch = (url, params = {}, config = {}) => {
+    const { loading = true, qs = false, paramType = 'data' } = config
     this.loading = loading
     return new Promise((resolve, reject) => {
-      this.request
-        .patch(url, this.qs && qs ? this.qs.stringify(params) : params)
-        .then(response => {
-          resolve(response)
-        })
-        .catch(error => {
-          reject(error)
-        })
+      const requestType = {
+        axios: () => {
+          const arg = {
+            method: 'patch',
+            url: url,
+          }
+          const keyMap = {
+            //用form传参方式,数据拼接在url
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+            },
+            //用data方式传参的请求，数据拼接在body里
+            'data': () => {
+              Object.assign(arg, {
+                data: params,
+              })
+            },
+          }
+          keyMap[paramType]()
+          this.request(arg)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              reject(error)
+            })
+        },
+        fly: () => {
+          this.request
+            .patch(url, this.qs && qs ? this.qs.stringify(params) : params)
+            .then(response => {
+              resolve(response)
+            })
+            .catch(error => {
+              reject(error)
+            })
+        }
+      }
+      requestType[this.type]()
     })
   };
+
 
   /**
    * 请求类 delete 方法 多用来删除数据
    * @param {String} url api接口地址
-   * @param  {Object/String}  params 传到后台的参数
+   * @param  {Object}  params 传到后台的参数
    * @param {Object} config 配置项,包括 loading:是否开启loading动画;qs:是否开启qs转换
    * @return {Object} 返回请求结果
    */
-  delete = (url, params = '', config = {}) => {
-    //passParamWay(传参方式):data、param
-    const { loading = true, qs = true, passParamWay = 'params' } = config
+  delete = (url, params = {}, config = {}) => {
+    //paramType(传参方式):data、param
+    const { loading = true, qs = true, paramType = 'params' } = config
     this.loading = loading
     return new Promise((resolve, reject) => {
       let arg = ''
-      if (this.type === 'axios') {
-        arg = {
-          paramsSerializer: params => {
-            return this.qs && qs ? this.qs.stringify(params) : params
+      const requestType = {
+        axios: () => {
+          arg = {
+            paramsSerializer: params => {
+              return this.qs && qs ? this.qs.stringify(params) : params
+            }
           }
-        }
-        const keyMap = {
-          'params': () => {
-            Object.assign(arg, {
-              params: params,
-            })
-          },
-          //用data方式传参的请求，多用在批量删除时,相当于deleteData
-          'data': () => {
-            Object.assign(arg, {
-              data: params,
-            })
+          const keyMap = {
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+            },
+            //用data方式传参的请求，多用在批量删除时,相当于deleteData
+            'data': () => {
+              Object.assign(arg, {
+                data: params,
+              })
+            }
           }
+          keyMap[paramType]()
+        },
+        fly: () => {
+          arg = this.qs && qs ? this.qs.stringify(params) : params
         }
-        keyMap[passParamWay]()
-      } else {
-        arg = this.qs && qs ? this.qs.stringify(params) : params
       }
+      requestType[this.type]()
       this.request
         .delete(url, arg)
         .then(response => {
@@ -438,11 +564,11 @@ class Request {
 
   /** 文件上传，且可以带上headers参数 --只能是post请求,其他请求接收不到文件类型的数据
    * @param  {String}  url api接口地址
-   * @param  {Object/String}  params 传到后台的参数
+   * @param  {Object}  params 传到后台的参数
    * @param  {Object}  config 配置项 loading:是否开启loading动画 headers:添加请求头--可用来传递参数 timeout:超时时间，为0时则无超时限制
    * @return {Object}  返回请求结果
    */
-  submitFormData = (url, params = '', config = {}) => {
+  submitFormData = (url, params = {}, config = {}) => {
     const { loading = true, headers = {}, timeout = 0 } = config
     this.loading = loading
     return new Promise((resolve, reject) => {
@@ -463,7 +589,6 @@ class Request {
           })
         return
       }
-
       // fly请求必须加上传输文件headers头才可以提交请求
       this.request
         .request(url, params, {
@@ -482,5 +607,4 @@ class Request {
     })
   };
 }
-
 export default Request
