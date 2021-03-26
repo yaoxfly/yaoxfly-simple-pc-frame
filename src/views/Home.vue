@@ -7,8 +7,8 @@
 
 <script>
 // @ is an alias to /src
-// import login from '@/api/login'
-import test from '@/api/test'
+import login from '@/api/login'
+// import test from '@/api/test'
 export default {
   name: 'Home',
   components: {},
@@ -18,7 +18,7 @@ export default {
     // }).then(res => {
     //   console.log(res)
     // })
-    test.deleteBodyTest({
+    login.getToken({
       auditDesc: '33'
     }).then(res => {
       console.log(res)

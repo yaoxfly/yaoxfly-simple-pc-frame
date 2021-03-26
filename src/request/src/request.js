@@ -224,8 +224,26 @@ class Request {
    */
   requests = (url, params = {}, type = 'get', config = {}) => {
     //paramType(传参方式):data、param
-    const { loading = true, qs = true, headers = {}, responseType = '', paramType = 'params' } = config
+    let { loading = true, qs = true, headers = {}, responseType = '', paramType = '' } = config
     this.loading = loading
+    const typeMap = {
+      get: () => {
+        paramType = paramType || 'params'
+      },
+      post: () => {
+        paramType = paramType || 'data'
+      },
+      put: () => {
+        paramType = paramType || 'data'
+      },
+      patch: () => {
+        paramType = paramType || 'data'
+      },
+      delete: () => {
+        paramType = paramType || 'params'
+      }
+    }
+    typeMap[type] && typeMap[type]()
     return new Promise((resolve, reject) => {
       const requestType = {
         axios: () => {
@@ -262,13 +280,25 @@ class Request {
               reject(error)
             })
         },
+
         fly: () => {
+          const arg = {
+            method: type,
+            headers: headers,
+            responseType: responseType,
+          }
+          const keyMap = {
+            //用form传参方式,数据拼接在url
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+              params = null
+            },
+          }
+          keyMap[paramType] && keyMap[paramType]()
           this.request
-            .request(url, this.qs && qs ? this.qs.stringify(params) : params, {
-              method: type,
-              headers: headers,
-              responseType: responseType,
-            })
+            .request(url, this.qs && qs ? this.qs.stringify(params) : params, arg)
             .then(response => {
               resolve(response)
             })
@@ -382,8 +412,19 @@ class Request {
             })
         },
         fly: () => {
+          const arg = {}
+          const keyMap = {
+            //用form传参方式,数据拼接在url
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+              params = null
+            },
+          }
+          keyMap[paramType] && keyMap[paramType]()
           this.request
-            .post(url, params)
+            .post(url, params, arg)
             .then(response => {
               resolve(response)
             })
@@ -395,7 +436,6 @@ class Request {
       requestType[this.type]()
     })
   };
-
 
 
   /**
@@ -439,8 +479,21 @@ class Request {
             })
         },
         fly: () => {
+          const arg = {}
+          const keyMap = {
+            //用form传参方式,数据拼接在url
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+              params = null
+            },
+          }
+          keyMap[paramType] && keyMap[paramType]()
           this.request
-            .put(url, this.qs && qs ? this.qs.stringify(params) : params)
+            .put(url, this.qs && qs ? this.qs.stringify(params) : params,
+              arg
+            )
             .then(response => {
               resolve(response)
             })
@@ -495,8 +548,19 @@ class Request {
             })
         },
         fly: () => {
+          const arg = {}
+          const keyMap = {
+            //用form传参方式,数据拼接在url
+            'params': () => {
+              Object.assign(arg, {
+                params: params,
+              })
+              params = null
+            },
+          }
+          keyMap[paramType] && keyMap[paramType]()
           this.request
-            .patch(url, this.qs && qs ? this.qs.stringify(params) : params)
+            .patch(url, this.qs && qs ? this.qs.stringify(params) : params, arg)
             .then(response => {
               resolve(response)
             })

@@ -14,7 +14,7 @@ Vue.use(Request)
 export default new Request({
   /* 请求配置 */
   requestConfig: {
-    request: axios, // 请求名 flyio/axios
+    request: axios, // 请求名 fly/axios
     type: 'axios', // 请求类型
     qs: qs,
     headers: {
