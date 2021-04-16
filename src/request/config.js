@@ -4,7 +4,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
-import Request from './index'
+import Request from './index' // 引入请求库
 import { Loading } from 'element-ui'
 import cache from '@/utils/cache.js'
 import router from '@/router/index.js'
@@ -21,10 +21,11 @@ export default new Request({
       'Content-Type': 'application/json;charset=utf-8'
     },
     timeout: 30000,
-    baseURL: process.env.VUE_APP_SERVER,
+    baseURL: process.env.VUE_APP_SERVER, // 后台api的域名、ip等
     withCredentials: false,
     // 请求拦截前 config是ajax
     interceptionBefore: config => {
+      // 在这里添加token
       const token = cache.getCache('token')
       if (token) {
         config.headers.Authorization = 'bearer' + ' ' + token
@@ -34,7 +35,7 @@ export default new Request({
     interceptionAfter: response => { },
     // 是否JSONParse返回的数据
     jsonParse: response => {
-      // 可自由添加判定条件
+      // 可自由添加不需要JSONParse的数据,true就是需要，false就是不需要的。
       return true
     }
   },
@@ -62,7 +63,7 @@ export default new Request({
     }
   },
 
-  /* 请求成功/异常配置 */
+  /* 请求成功、异常的配置 */
   resError: {
     success: 'success', // 与后台规定的是否成功键值名
     key: 'code', // 与后台规定的状态码的键值名
@@ -77,7 +78,7 @@ export default new Request({
         })
       }, 200)
 
-      // 登录失败的处理
+      // 登录失败的处理,失败就跳到登录页
       if (response.status === 401) {
         router.push({
           path: '/login'
