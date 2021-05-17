@@ -164,13 +164,53 @@ export default {
       console.log(emit, 11)
     },
 
-    /** @description  根据路由获取菜单数据(only二级)
-     * @author yx
-     */
+    // /** @description  根据路由获取菜单数据(only二级)
+    //  * @author yx
+    //  */
+    // getMenu () {
+    //   const arr = routes.filter(item => item.name === 'Layout')
+    //   const route = JSON.parse(JSON.stringify(arr[0].children))
+    //   const tempMenuData = []
+    //   route.forEach(element => {
+    //     const { meta: { menu } = {} } = element || {}
+    //     const item = {
+    //       icon: element.icon,
+    //       text: element.text,
+    //       type: 'item',
+    //       path: element.path
+    //     }
+    //     if (menu) {
+    //       console.log(menu, 55555)
+    //       menu.children = menu.children || []
+    //       menu.children.push(item)
+    //       tempMenuData.push(menu)
+    //     } else {
+    //       tempMenuData.push(item)
+    //     }
+    //   })
+    //   const keyMap = {}
+    //   tempMenuData.forEach(el => {
+    //     if (keyMap[el.text]) {
+    //       keyMap[el.text].children.push(...el.children)
+    //     } else {
+    //       keyMap[el.text] = el
+    //     }
+    //   })
+    //   const menuData = []
+    //   Object.values(keyMap).forEach(el => [
+    //     menuData.push(el)
+    //   ])
+    //   this.menuData = menuData
+    // },
+
+    /** @description  根据路由获取菜单数据(三级)
+   * @author yx
+   */
     getMenu () {
       const arr = routes.filter(item => item.name === 'Layout')
       const route = JSON.parse(JSON.stringify(arr[0].children))
       const tempMenuData = []
+      let menuData = {}
       route.forEach(element => {
         const { meta: { menu } = {} } = element || {}
         const item = {
@@ -180,13 +220,25 @@ export default {
           path: element.path
         }
         if (menu) {
-          menu.children = menu.children || []
-          menu.children.push(item)
-          tempMenuData.push(menu)
+          if (menu.length > 1) {
+            menuData = menu[0]
+            menuData.children = menuData.children || []
+            menu[1].children = menu[1].children || []
+            menu[1].children.push(item)
+            menuData.children.push(menu[1])
+          } else {
+            menuData = menu[0]
+            menuData.children = menuData.children || []
+            menuData.children.push(item)
+          }
+          tempMenuData.push(menuData)
         } else {
           tempMenuData.push(item)
         }
       })
+
+      // console.log(tempMenuData, 111)
+      // 二级处理 一级: { 二级: [], s级: [] }, 一级2: { 二级: [], e: [] }
       const keyMap = {}
       tempMenuData.forEach(el => {
         if (keyMap[el.text]) {
@@ -195,12 +247,43 @@ export default {
           keyMap[el.text] = el
         }
       })
-      const menuData = []
-      Object.values(keyMap).forEach(el => [
-        menuData.push(el)
-      ])
-      this.menuData = menuData
+
+      // 新逻辑 明天改
+      // tempMenuData.forEach(el => {
+      //   if (keyMap[el.text]) {
+      //     el.children.forEach(res => {
+      //       console.log(res, 1, keyMap[el.text][res.text])
+      //       // keyMap[el.text][res.text].push(...res.children)
+
+      //       if (keyMap[el.text][res.text]) {
+      //         keyMap[el.text][res.text].children.push(...res.children)
+      //       } else {
+      //         keyMap[el.text][res.text] = {}
+      //         keyMap[el.text][res.text] = res
+      //       }
+      //     })
+      //   } else {
+      //     if (el.children) {
+      //       keyMap[el.text] = el
+      //       el.children.forEach(res => {
+      //         // console.log(res, 333)
+      //         keyMap[el.text][res.text] = keyMap[el.text][res.text] || {}
+      //         keyMap[el.text][res.text] = res
+      //       })
+      //     } else {
+      //       keyMap[el.text] = el
+      //     }
+      //   }
+      // })
+
+      // 变成菜单
+      const menuDatas = []
+      Object.values(keyMap).forEach(el => {
+        menuDatas.push(el)
+      })
+      this.menuData = menuDatas
     }
+
   }
 }
 

@@ -10,11 +10,15 @@ export default [
         icon: 'el-icon-location',
         component: () => import('@/views/About.vue'),
         meta: {
-            menu: {
-                icon: 'el-icon-location',
-                type: 'submenu',
-                text: '关于'
-            }
+            // 面包屑
+            menu: [
+                {
+                    icon: 'el-icon-location',
+                    type: 'submenu', // 必须
+                    text: '一级目录'
+                }
+            ]
         }
     }
+
 ]
