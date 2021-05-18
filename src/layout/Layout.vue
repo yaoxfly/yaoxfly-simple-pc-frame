@@ -19,6 +19,7 @@
           :collapse="collapse"
           :width="width"
           ref="menu"
+          @select="select"
         >
         </eve-menu>
       </section>
@@ -26,7 +27,7 @@
       <section class="right">
         <eve-breadcrumb ref="breadcrumd" :menu="menuData" class="bred">
         </eve-breadcrumb>
-        <!-- <eve-tag-views ref="tagView" > </eve-tag-views> -->
+        <!-- <eve-tag-views ref="tagView"> </eve-tag-views> -->
         <eve-main>
           <router-view />
         </eve-main>
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+
 import { routes } from '../router/index'
 export default {
   name: 'Layout',
@@ -152,7 +154,7 @@ export default {
 
   mounted () {
     this.getMenu()
-    console.log(this.$store.state.test.modules)
+    // console.log(this.$store.state.test.modules)
   },
 
   methods: {
@@ -164,44 +166,9 @@ export default {
       console.log(emit, 11)
     },
 
-    // /** @description  根据路由获取菜单数据(only二级)
-    //  * @author yx
-    //  */
-    // getMenu () {
-    //   const arr = routes.filter(item => item.name === 'Layout')
-    //   const route = JSON.parse(JSON.stringify(arr[0].children))
-    //   const tempMenuData = []
-    //   route.forEach(element => {
-    //     const { meta: { menu } = {} } = element || {}
-    //     const item = {
-    //       icon: element.icon,
-    //       text: element.text,
-    //       type: 'item',
-    //       path: element.path
-    //     }
-    //     if (menu) {
-    //       console.log(menu, 55555)
-    //       menu.children = menu.children || []
-    //       menu.children.push(item)
-    //       tempMenuData.push(menu)
-    //     } else {
-    //       tempMenuData.push(item)
-    //     }
-    //   })
-    //   const keyMap = {}
-    //   tempMenuData.forEach(el => {
-    //     if (keyMap[el.text]) {
-    //       keyMap[el.text].children.push(...el.children)
-    //     } else {
-    //       keyMap[el.text] = el
-    //     }
-    //   })
-    //   const menuData = []
-    //   Object.values(keyMap).forEach(el => [
-    //     menuData.push(el)
-    //   ])
-    //   this.menuData = menuData
-    // },
+    select (emit) {
+      console.log(emit, 1)
+    },
 
     /** @description  根据路由获取菜单数据(三级)
    * @author yx
@@ -236,46 +203,43 @@ export default {
           tempMenuData.push(item)
         }
       })
-
-      // console.log(tempMenuData, 111)
-      // 二级处理 一级: { 二级: [], s级: [] }, 一级2: { 二级: [], e: [] }
       const keyMap = {}
       tempMenuData.forEach(el => {
         if (keyMap[el.text]) {
-          keyMap[el.text].children.push(...el.children)
+          el.children.forEach(res => {
+            if (keyMap[el.text][res.text]) {
+              keyMap[el.text][res.text].children.push(...res.children)
+            } else {
+              keyMap[el.text][res.text] = {}
+              keyMap[el.text][res.text] = res
+            }
+          })
         } else {
-          keyMap[el.text] = el
+          if (el.children) {
+            keyMap[el.text] = el
+            el.children.forEach(res => {
+              keyMap[el.text][res.text] = keyMap[el.text][res.text] || {}
+              keyMap[el.text][res.text] = res
+            })
+          } else {
+            keyMap[el.text] = el
+          }
         }
       })
 
-      // 新逻辑 明天改
-      // tempMenuData.forEach(el => {
-      //   if (keyMap[el.text]) {
-      //     el.children.forEach(res => {
-      //       console.log(res, 1, keyMap[el.text][res.text])
-      //       // keyMap[el.text][res.text].push(...res.children)
-
-      //       if (keyMap[el.text][res.text]) {
-      //         keyMap[el.text][res.text].children.push(...res.children)
-      //       } else {
-      //         keyMap[el.text][res.text] = {}
-      //         keyMap[el.text][res.text] = res
-      //       }
-      //     })
-      //   } else {
-      //     if (el.children) {
-      //       keyMap[el.text] = el
-      //       el.children.forEach(res => {
-      //         // console.log(res, 333)
-      //         keyMap[el.text][res.text] = keyMap[el.text][res.text] || {}
-      //         keyMap[el.text][res.text] = res
-      //       })
-      //     } else {
-      //       keyMap[el.text] = el
-      //     }
-      //   }
-      // })
-
+      Object.values(keyMap).forEach(el => {
+        if (el.children) {
+          el.children = [] // 先清空,防止重复
+          Object.keys(el).forEach(key => {
+            const val = el[key]
+            const reg = new RegExp('[\\u4E00-\\u9FFF]+', 'g')
+            if (reg.test(key)) {
+              el.children.push(val)
+              delete el[key]
+            }
+          })
+        }
+      })
       // 变成菜单
       const menuDatas = []
       Object.values(keyMap).forEach(el => {
@@ -283,7 +247,6 @@ export default {
       })
       this.menuData = menuDatas
     }
-
   }
 }
 

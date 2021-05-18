@@ -14,8 +14,13 @@ export default [
             menu: [
                 {
                     icon: 'el-icon-location',
-                    type: 'submenu', // 必须
+                    type: 'submenu', // type属性必须
                     text: '一级目录'
+                },
+                {
+                    icon: 'el-icon-location',
+                    type: 'submenu', // type属性必须
+                    text: '二级目录'
                 }
             ]
         }

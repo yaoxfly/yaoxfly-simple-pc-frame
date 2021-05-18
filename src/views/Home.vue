@@ -6,23 +6,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import login from '@/api/login'
-// import test from '@/api/test'
 export default {
   name: 'Home',
   components: {},
-  mounted () {
-    // login.getToken({
-    //   aa: 12
-    // }).then(res => {
-    //   console.log(res)
-    // })
-    login.getToken({
-      auditDesc: '33'
-    }).then(res => {
-      console.log(res)
-    })
-  }
+  mounted () { }
 }
 </script>
