@@ -1,6 +1,6 @@
 // 实现自动化加载modules
 const modules = {}
-const modulesContext = require.context('./modules', true, /\.js$/)
+const modulesContext = require.context('../modules', true, /\.js$/)
 modulesContext.keys().forEach(item => {
     const modulesItem = modulesContext(item)
     // 未设置别名就用文件名

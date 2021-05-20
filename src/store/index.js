@@ -7,7 +7,7 @@ import actions from './action'
 // eve-ui某些功能需要引入的
 import modules from 'eve-ui/src/store/modules'
 // 自动引入当前工程的所有module
-import autoScanModules from './autoScanModules'
+import autoScanModules from './lib/autoScanModules'
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: state,

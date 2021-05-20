@@ -25,7 +25,19 @@
       </section>
 
       <section class="right">
-        <eve-breadcrumb ref="breadcrumd" :menu="menuData" class="bred">
+        <eve-breadcrumb
+          ref="breadcrumd"
+          :menu="menuData"
+          class="bred"
+          v-show="breadcrumb.length === 0"
+        >
+        </eve-breadcrumb>
+
+        <eve-breadcrumb
+          v-show="breadcrumb.length > 0"
+          class="bred"
+          :data="breadcrumb"
+        >
         </eve-breadcrumb>
         <!-- <eve-tag-views ref="tagView"> </eve-tag-views> -->
         <eve-main>
@@ -143,8 +155,10 @@ export default {
           dialog: true // 设置这个属性后,点击这个按钮会弹出对话框,默认是false
         }
       ],
-      // 菜单数据
+      // 菜单、面包屑数据
       menuData: [],
+      // 面包屑数据(路由非菜单时--详情等特殊情况的路由)
+      breadcrumb: [],
       // 菜单宽度
       width: 200,
       // 是否收缩
@@ -175,7 +189,9 @@ export default {
    */
     getMenu () {
       const arr = routes.filter(item => item.name === 'Layout')
-      const route = JSON.parse(JSON.stringify(arr[0].children))
+      let route = JSON.parse(JSON.stringify(arr[0].children))
+      console.log(route, 11)
+      route = route.filter(item => !item.meta?.noMenu)
       const tempMenuData = []
       let menuData = {}
       route.forEach(element => {
@@ -246,6 +262,16 @@ export default {
         menuDatas.push(el)
       })
       this.menuData = menuDatas
+      console.log(menuDatas)
+    }
+  },
+
+  watch: {
+    $route: {
+      handler (newValue) {
+        this.breadcrumb = newValue.meta?.noMenu ? newValue.meta.menu : []
+      },
+      immediate: true
     }
   }
 }

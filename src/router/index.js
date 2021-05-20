@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '../layout/Layout.vue'
-import autoScanRouter from './autoScanRouter'
-import './repeatRoute'
+import autoScanRouter from './lib/autoScanRouter'
+import './lib/repeatRoute'
 Vue.use(VueRouter)
 let routes = [
   {
@@ -10,6 +10,7 @@ let routes = [
     name: 'Layout',
     redirect: '/home',
     component: Layout,
+    // 子路由自动关联菜单
     children: [
       {
         path: '/home',
