@@ -1,7 +1,7 @@
 ## 初始化
 
 ``` js
- npm install
+npm install
 ```
 
 ###  开发环境
