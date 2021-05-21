@@ -25,7 +25,7 @@ export default {
   methods: {
     // request请求组件范例
     getTest () {
-      test.getTest({})
+      test.getTest()
         .then(res => {
           console.log(res, '请求状态200,即接口请求成功时执行')
         }).catch(res => {

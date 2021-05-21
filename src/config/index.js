@@ -14,7 +14,7 @@ const keyMap = {
   // 测试环境
   test: () => {
     Object.assign(config, {
-      server: '',
+      server: '', // api地址
       mock: false // 是否开启mock
     })
   },
@@ -22,7 +22,7 @@ const keyMap = {
   // 正式环境
   production: () => {
     Object.assign(config, {
-      server: '',
+      server: '', // api地址
       mock: false // 是否开启mock
     })
   }
