@@ -1,4 +1,4 @@
-
+/* mock范例 */
 import { Mock, Random, returnData } from '../base.js'
 const MockData = {
     // 字符串
@@ -15,25 +15,11 @@ const MockData = {
         }]
     })
 }
-
 const login = req => {
     console.log(req)
     return returnData({
         token: MockData.login
     })
 }
-
-const image = req => {
-    console.log(req)
-    return returnData({
-        image: MockData.image
-    })
-}
-
 // get请求路径必须用正则,其他可用可不用
-Mock.mock(/\/user\/login/, 'post', login)
-Mock.mock(/\/user\/login/, 'get', login)
-Mock.mock(/\/user\/login/, 'delete', login)
-Mock.mock(/\/user\/login/, 'put', login)
-Mock.mock(/\/user\/login/, 'patch', login)
-Mock.mock(/\/user\/image/, 'get', image)
+Mock.mock(/\/demo\/getTest/, 'get', login) // 拦截 请求的/demo/getTest接口

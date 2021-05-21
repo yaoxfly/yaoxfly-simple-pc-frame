@@ -1,3 +1,5 @@
+/* 错误界面模块 */
+
 //  定义是否是子路由,默认是true
 export const isChildrenRouter = false
 export default [

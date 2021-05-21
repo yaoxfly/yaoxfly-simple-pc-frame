@@ -6,8 +6,9 @@ import axios from 'axios'
 import qs from 'qs'
 import Request from './index' // 引入请求库
 import { Loading } from 'element-ui'
-import cache from '@/utils/cache.js'
-import router from '@/router/index.js'
+import cache from '@/utils/cache'
+import router from '@/router/index'
+import config from '@/config'
 const $this = new Vue()
 var loading = ''
 Vue.use(Request)
@@ -21,7 +22,7 @@ export default new Request({
       'Content-Type': 'application/json;charset=utf-8'
     },
     timeout: 30000,
-    baseURL: process.env.VUE_APP_SERVER, // 后台api的域名、ip等
+    baseURL: config.server, // 后台api的域名、ip等
     withCredentials: false,
     // 请求拦截前 config是ajax
     interceptionBefore: config => {
@@ -35,7 +36,7 @@ export default new Request({
     interceptionAfter: response => { },
     // 是否JSONParse返回的数据
     jsonParse: response => {
-      // 可自由添加不需要JSONParse的数据,true就是需要，false就是不需要的。
+      // 可自由添加不需要JSONParse的数据的逻辑方法,true就是需要false就是不需要的
       return true
     }
   },
@@ -68,8 +69,8 @@ export default new Request({
     success: 'success', // 与后台规定的是否成功键值名
     key: 'code', // 与后台规定的状态码的键值名
     msg: 'msg', // 与后台规定的消息键值名 key值必须是msg,右边可改。
-    value: -1, // 与后台规定的表示登录失败的code值
-    // 接口异常默认提示的方法/登录失败等操作也可在这里进行处理
+    value: -1, // 与后台规定的表示登录失败的code值,值相等时触发下面的
+    // 接口异常(接口500,403等报错时执行）
     tipShow: (err, response) => {
       setTimeout(() => {
         $this.$Message({
@@ -78,7 +79,7 @@ export default new Request({
         })
       }, 200)
 
-      // 登录失败的处理,失败就跳到登录页
+      // 后端使用http状态码返回时401时，登录失败的处理方式
       if (response.status === 401) {
         router.push({
           path: '/login'
@@ -86,7 +87,7 @@ export default new Request({
       }
     },
 
-    // 登录失败提示
+    // 登录失败时执行--与后台规定的表示登录失败的code值相等时触发的方法
     notLogin: err => {
       setTimeout(() => {
         $this.$Message({
@@ -96,7 +97,7 @@ export default new Request({
       }, 200)
     },
 
-    // 不成功的提示
+    // 请求状态码200, 但业务上不成功时执行,即code!==0
     notSuccessful: (code, err) => {
       setTimeout(() => {
         err && $this.$Message({

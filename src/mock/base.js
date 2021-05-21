@@ -1,4 +1,7 @@
-import Mock from 'mockjs' // 引入mock包
+/** @description mock基类,公共方法等
+ * @author yx
+ */
+import Mock from 'mockjs'
 Mock.setup({
     timeout: 800
 })

@@ -1,24 +1,27 @@
-# yaoxfly-simple-pc-frame
+## 初始化
 
-## Project setup
-```
-npm install
+``` js
+ npm install
 ```
 
-### Compiles and hot-reloads for development
-```
+###  开发环境
+
+```js 
+
 npm run serve
-```
 
-### Compiles and minifies for production
-```
+``` 
+
+###  正式打包
+
+```js 
+
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+###  测试打包
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```js 
+
+npm run build:test
+```
