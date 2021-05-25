@@ -8,9 +8,9 @@
 body {
   overflow: hidden;
   background: #f5f7fa;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Microsoft YaHei, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #606266;
 }
 </style>
