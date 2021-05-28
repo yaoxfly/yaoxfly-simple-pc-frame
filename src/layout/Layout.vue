@@ -167,7 +167,11 @@ export default {
   },
 
   mounted () {
-    this.getMenu()
+    try {
+      this.getMenu()
+    } catch (res) {
+      this.$message.error('路由text字段不能重复')
+    }
     // console.log(this.$store.state.test.modules)
   },
 
