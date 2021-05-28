@@ -8,7 +8,7 @@ let routes = [
   {
     path: '/',
     name: 'Layout',
-    redirect: '/home',
+    redirect: '/form',
     component: Layout,
     // 子路由自动关联菜单
     children: [

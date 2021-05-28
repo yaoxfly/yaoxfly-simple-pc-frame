@@ -1,6 +1,10 @@
 const isProduction = process.env.NODE_ENV === 'production' // 是否在正式环境
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
+const path = require('path')
+function resolve (dir) {
+    return path.join(__dirname, dir)
+  }
 module.exports = {
     publicPath: process.env.VUE_APP_PUBLIC_PATH,
     productionSourceMap: false,
@@ -17,6 +21,9 @@ module.exports = {
                 minRatio: 0.8
             })
         )
+        config.resolve.alias['@asset'] = resolve('src/assets')
+        config.resolve.alias['@'] = resolve('src')
+        config.resolve.alias._c = resolve('src/components')
     },
     devServer: {
         open: false,
