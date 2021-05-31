@@ -543,11 +543,9 @@
 </template>
 <script>
 
-import formCompsMixin from '@/mixins/comps'
 import { cascaderOption } from './cascader'
 export default {
   name: 'Form',
-  mixins: [formCompsMixin],
   data () {
     return {
       size: 'mini',
