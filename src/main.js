@@ -9,6 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import eveUi from 'eve-ui'
 import 'eve-ui/lib/eve-ui.css'
 import config from '@/config'
+
 Vue.use(ElementUI)
 Vue.use(eveUi)
 Vue.config.productionTip = false
