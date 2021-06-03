@@ -10,7 +10,8 @@
    6、新增简单上传文件组件;eg:具体逻辑参考源码
    7、Form的颜色样式取自base.scss文件；
    8、新增【全局性修改css】；
-   9、新增动态增减【表格类表单】组件。eg:具体逻辑参考源码
+   9、新增动态增减【表格类表单】组件。eg:具体逻辑参考源码；
+   10、新增 class="fixed-error"，错误icon显示位置;eg：参考[下拉单选]和[日期选择]两个表单样式
    特别说明：
     1、如需修改该模板页的个性化样式，建议自定义class包裹修改样式，不建议直接调整demo页写好的样式；
   @Date: 2021-5-31
@@ -30,7 +31,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="必填校验" prop="requestText">
+          <el-form-item class="fixed-error" label="必填校验" prop="requestText">
             <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
@@ -168,7 +169,7 @@
       </el-row>
       <el-row type="flex" class="form-content">
         <el-col :span="12">
-          <el-form-item label="下拉选择" prop="selectText">
+          <el-form-item class="fixed-error" label="下拉选择" prop="selectText">
             <el-select
               class="eve-common-select"
               :size="size"
@@ -191,7 +192,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="下拉多选" prop="selectMultipleText">
+          <el-form-item class="fixed-error" label="下拉多选" prop="selectMultipleText">
             <el-select
               class="eve-common-select"
               :size="size"
@@ -334,7 +335,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="简单上传" prop="fileText">
+          <el-form-item class="fixed-error" label="简单上传" prop="fileText">
             <el-input
               class="eve-common-input"
               :size="size"
@@ -415,7 +416,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="必填校验" prop="requestText">
+          <el-form-item class="fixed-error" label="必填校验" prop="requestText">
             <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
@@ -438,7 +439,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="必填校验" prop="requestText">
+          <el-form-item class="fixed-error" label="必填校验" prop="requestText">
             <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
@@ -461,7 +462,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="必填校验" prop="requestText">
+          <el-form-item class="fixed-error" label="必填校验" prop="requestText">
             <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
@@ -492,7 +493,11 @@
         <el-table-column type="index" label="序号" min-width="20" align="lef"></el-table-column>
         <el-table-column label="日期" align="left" width="260">
           <template slot-scope="scope">
-            <el-form-item :prop="'list.' + scope.$index + '.dateText'" :rules="tableRules.dateText">
+            <el-form-item
+              class="fixed-error"
+              :prop="'list.' + scope.$index + '.dateText'"
+              :rules="tableRules.dateText"
+            >
               <el-date-picker
                 class="eve-common-date-picker"
                 :size="size"
@@ -511,7 +516,11 @@
         </el-table-column>
         <el-table-column label="姓名" align="left" class-name="must">
           <template slot-scope="scope">
-            <el-form-item :prop="'list.' + scope.$index + '.name'" :rules="tableRules.name">
+            <el-form-item
+              class="fixed-error"
+              :prop="'list.' + scope.$index + '.name'"
+              :rules="tableRules.name"
+            >
               <el-input class="eve-common-input" :size="size" v-model="scope.row.name" />
               <!-- 自定义表单错误提示 -->
               <template slot="error" slot-scope="scope">
@@ -696,6 +705,8 @@ $ContentPadding: 3px 30px 3px 4px;
 $eveCommonInputHeight: 26px; //mini为28px,目前设置比mini还小
 //eve-common-input内部边距
 $eveCommonInputPadding: 0 4px;
+//eve-common-input prefix、suffix图标距离文字间距
+$eveCommonInputPrefixSuffix: 30px;
 
 .eve-form {
   /*********表单[start]*********/
@@ -719,6 +730,7 @@ $eveCommonInputPadding: 0 4px;
     color: $--color-info;
     margin-left: 20px;
   }
+
   .el-form-item {
     margin-bottom: 0; //去掉form-item默认的底边距
     height: 100%; //很重要，不能去掉，否则form-label无法随form-content的高度变化而变化
@@ -733,6 +745,7 @@ $eveCommonInputPadding: 0 4px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      border-right: 1px solid $tableBorderColor;
     }
     .el-form-item__content {
       position: relative;
@@ -743,15 +756,19 @@ $eveCommonInputPadding: 0 4px;
       display: flex;
       align-items: center;
     }
-
-    /***重***自定义表单错误提示***点***/
     .eve-form-error-tip {
       color: $--color-danger;
-      right: 3px;
-      //垂直居中css
-      position: absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      margin-left: 5px;
+    }
+    &.fixed-error {
+      /***重***自定义表单错误提示***点***/
+      .eve-form-error-tip {
+        right: 3px;
+        //垂直居中css
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
   }
 
@@ -766,14 +783,14 @@ $eveCommonInputPadding: 0 4px;
         line-height: 1;
       }
       //改变输入框的默认内边距，前后图标的默认左右边距需要重新设置一下，否则出现图标的时候会出现css异常
-      .el-input--prefix .el-input__inner {
-        padding-left: 30px;
+      .el-input--prefix .el-input__inner,.el-input--suffix .el-input__inner {
+        padding-left: $eveCommonInputPrefixSuffix;
       }
-      .el-input--suffix .el-input__inner {
-        padding-right: 30px;
+      .el-input__icon {
+        line-height: 1;
       }
     }
-
+    //多行文本框
     &.el-textarea {
       //多行文本框内边距
       .el-textarea__inner {
@@ -788,6 +805,55 @@ $eveCommonInputPadding: 0 4px;
 
   /*********InputNumber 计数器[start]*********/
   .eve-common-input-number {
+    &.el-input-number {
+      line-height: 2; //左右按钮根据行高设置
+      .el-input__inner {
+        //input内边距
+        padding: $eveCommonInputPadding;
+        //input高度
+        height: $eveCommonInputHeight;
+        line-height: 1;
+      }
+    }
+  }
+
+  /*********DatePicker 日期选择器[start]*********/
+  .eve-common-date-picker {
+    overflow: hidden;
+    .el-input__inner {
+      //input内边距
+      padding: $eveCommonInputPadding;
+      //input高度
+      height: $eveCommonInputHeight;
+      line-height: 1;
+    }
+
+    //改变输入框的默认内边距，前后图标的默认左右边距需要重新设置一下，否则出现图标的时候会出现css异常
+    &.el-input--prefix .el-input__inner,.el-input--suffix .el-input__inner {
+      padding-left:$eveCommonInputPrefixSuffix;
+    }
+    .el-input__icon {
+      line-height: $eveCommonInputHeight;
+    }
+  }
+
+  /*********timePicker 时间选择器[start]*********/
+  .eve-common-time-select {
+    overflow: hidden;
+    .el-input__inner {
+      //input内边距
+      padding: $eveCommonInputPadding;
+      //input高度
+      height: $eveCommonInputHeight;
+      line-height: 1;
+    }
+    //改变输入框的默认内边距，前后图标的默认左右边距需要重新设置一下，否则出现图标的时候会出现css异常
+    &.el-input--prefix .el-input__inner,.el-input--suffix .el-input__inner {
+      padding-left: $eveCommonInputPrefixSuffix;
+    }
+    .el-input__icon {
+      line-height: $eveCommonInputHeight;
+    }
   }
 
   /*********Radio 单选框[start]*********/
@@ -850,6 +916,7 @@ $eveCommonInputPadding: 0 4px;
     }
   }
 
+  /*********select下拉框[start]*********/
   .eve-common-select {
     &.el-select {
       width: 100%;
@@ -860,16 +927,10 @@ $eveCommonInputPadding: 0 4px;
         height: $eveCommonInputHeight;
         line-height: 1;
       }
-      //改变输入框的默认内边距，前后图标的默认左右边距需要重新设置一下，否则出现图标的时候会出现css异常
-      .el-input--prefix .el-input__inner {
-        padding-left: 30px;
-      }
-      .el-input--suffix .el-input__inner {
-        padding-right: 30px;
-      }
     }
   }
 
+  /*********select下拉复选框[start]*********/
   .eve-common-cascader {
     &.el-cascader {
       width: 100%;
@@ -880,16 +941,10 @@ $eveCommonInputPadding: 0 4px;
         height: $eveCommonInputHeight;
         line-height: 1;
       }
-      //改变输入框的默认内边距，前后图标的默认左右边距需要重新设置一下，否则出现图标的时候会出现css异常
-      .el-input--prefix .el-input__inner {
-        padding-left: 30px;
-      }
-      .el-input--suffix .el-input__inner {
-        padding-right: 30px;
-      }
     }
   }
 
+  /*********slider滑块[start]*********/
   .eve-common-slider {
     &.el-slider {
       width: 100%;
@@ -900,14 +955,13 @@ $eveCommonInputPadding: 0 4px;
     }
   }
 
+  /*********upload图片上传[start]*********/
   .eve-common-upload {
+    padding: 0px 0 12px 0;
+    line-height: 1;
     .el-upload-list--picture .el-upload-list__item {
       //三级边框-#ebeef5
       border: 1px solid $--border-color-lighter;
-    }
-    //根据实际需求调整
-    .el-upload__tip {
-      margin-top: 12px;
     }
   }
 }
