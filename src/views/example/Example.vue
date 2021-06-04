@@ -3,16 +3,16 @@
     <eve-container layout="center" padding="20px">
       <!-- 边框、卡片 -->
       <section>
-        <span class="title">边框</span>
-        <div class="eve-common-border border">常规边框</div>
-        <div class="eve-common-border--base-shadow border">基础投影</div>
-        <div class="eve-common-border--lighter-shadow border">浅色投影</div>
+        <span class="example-title">边框</span>
+        <div class="eve-common-border example-border">常规边框</div>
+        <div class="eve-common-border--base-shadow example-border">基础投影</div>
+        <div class="eve-common-border--lighter-shadow example-border">浅色投影</div>
         <div style="margin-bottom: 38px"></div>
       </section>
 
       <section>
-        <span class="title">卡片</span>
-        <el-card class="box-card margin-top">
+        <span class="example-title">卡片</span>
+        <el-card class="box-card example-margin-top">
           <div slot="header" class="clearfix">
             <span>卡片名称</span>
             <el-button style="float: right; padding: 3px 0" type="text"
@@ -26,7 +26,7 @@
       <!--消息框 -->
 
       <section>
-        <span class="title margin-top">消息框</span>
+        <span class="example-title example-margin-top">消息框</span>
         <div style="margin-top: 10px">
           <el-button size="small" @click="open">打开消息框</el-button>
         </div>
@@ -34,7 +34,7 @@
 
       <!--对话框 -->
       <section>
-        <span class="title margin-top">对话框</span>
+        <span class="example-title example-margin-top">对话框</span>
         <div style="margin-top: 10px">
           <el-button size="small" @click="visible = true">
             打开对话框
@@ -56,8 +56,8 @@
 
       <!-- 基础用法 -->
       <section>
-        <span class="title margin-top">标签页--常规</span>
-        <el-tabs v-model="activeName" class="margin-top">
+        <span class="example-title example-margin-top">标签页--常规</span>
+        <el-tabs v-model="activeName" class="example-margin-top">
           <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
           <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
         </el-tabs>
@@ -66,17 +66,17 @@
       <!-- 选项卡样式 -->
 
       <section>
-        <span class="title margin-top">标签页--选项卡样式1</span>
-        <el-tabs v-model="activeName" type="card" class="margin-top">
+        <span class="example-title  example-margin-top">标签页--选项卡样式1</span>
+        <el-tabs v-model="activeName" type="card" class="example-margin-top">
           <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
           <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
         </el-tabs>
       </section>
 
       <section>
-        <span class="title margin-top">标签页--选项卡样式2</span>
+        <span class="example-title example-margin-top">标签页--选项卡样式2</span>
         <div class="eve-common-tabs--division">
-          <el-tabs v-model="activeName" type="card" class="margin-top">
+          <el-tabs v-model="activeName" type="card" class="example-margin-top">
             <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
             <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
           </el-tabs>
@@ -85,9 +85,9 @@
 
       <!-- 按钮样式 -->
       <section>
-        <span class="title margin-top">标签页--按钮</span>
+        <span class="example-title example-margin-top">标签页--按钮</span>
         <div class="eve-common-tabs--button">
-          <el-tabs v-model="activeName" type="card" class="margin-top">
+          <el-tabs v-model="activeName" type="card" class="example-margin-top">
             <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
             <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
             <el-tab-pane label="按钮管理" name="thir">按钮管理</el-tab-pane>
@@ -97,8 +97,8 @@
 
       <!-- 纵向-->
       <section>
-        <span class="title margin-top">标签页--纵向</span>
-        <el-tabs v-model="activeName" tab-position="left" class="margin-top">
+        <span class="example-title example-margin-top">标签页--纵向</span>
+        <el-tabs v-model="activeName" tab-position="left" class="example-margin-top">
           <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
           <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
         </el-tabs>
@@ -106,9 +106,9 @@
       <!--步骤条 -->
 
       <section>
-        <span class="title margin-top">步骤条</span>
+        <span class="example-title example-margin-top">步骤条</span>
         <!--细线步骤条 -->
-        <div class="flex">
+        <div class="example-flex">
           <div style="width: 60%">
             <el-steps :active="active" align-center style="margin-top: 38px">
               <el-step title="步骤 1"></el-step>
@@ -119,7 +119,7 @@
         </div>
 
         <!--进度条 -->
-        <div class="flex">
+        <div class="example-flex">
           <div style="width: 60%">
             <el-steps :active="active" simple style="margin-top: 20px">
               <el-step title="步骤 1"></el-step>
@@ -129,7 +129,7 @@
           </div>
         </div>
 
-        <div class="flex">
+        <div class="example-flex">
           <el-button style="margin-top: 12px" @click="next" size="mini">
             下一步</el-button
           >
@@ -138,10 +138,10 @@
       <!--表格分页-->
 
       <section>
-        <span class="title margin-top">表格分页</span>
+        <span class="example-title example-margin-top">表格分页</span>
         <span class="margin-top">表格分页--常规表格</span>
         <eve-table-pagination
-          class="margin-top"
+          class="example-margin-top"
           header-cell-class-name="eve-common-table-pagination__header"
           @btn-operate="btnOperate"
           :delete-message-box="deleteMessageBox"
@@ -156,14 +156,14 @@
 
       <!--树-->
       <section>
-        <span class="title margin-top">树</span>
-        <eve-tree :data="treeData" class="margin-top" width="20%"></eve-tree>
+        <span class="example-title example-margin-top">树</span>
+        <eve-tree :data="treeData" class="example-margin-top" width="20%"></eve-tree>
       </section>
 
       <!--时间线(时间轴)-->
       <section>
-        <span class="title margin-top">时间线(时间轴)</span>
-        <el-timeline class="margin-top">
+        <span class="example-title example-margin-top">时间线(时间轴)</span>
+        <el-timeline class="example-margin-top">
           <el-timeline-item
             v-for="(activity, index) in activities"
             :key="index"
@@ -176,9 +176,9 @@
       </section>
       <!--时间线(时间轴)-->
       <section>
-        <span class="title margin-top">带信息面板时间轴</span>
+        <span class="example-title example-margin-top">带信息面板时间轴</span>
         <div style="width: 339px">
-          <el-timeline class="margin-top">
+          <el-timeline class="example-margin-top">
             <el-timeline-item timestamp="网上申报" placement="top">
               <el-card>
                 <p>2021-01-01 12:03:34</p>
@@ -501,12 +501,8 @@ export default {
 </script>
 
 <style  scoped>
-.test2 {
-}
-.ttt {
-}
-
-.border {
+/*以下只是范例上的样式*/
+.example-border {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -516,17 +512,17 @@ export default {
   font-size: 13px;
 }
 
-.margin-top {
+.example-margin-top {
   margin-top: 38px;
   display: block;
 }
 
-.title {
+.example-title {
   font-size: 16px;
   font-weight: bold;
 }
 
-.flex {
+.example-flex {
   display: flex;
   justify-content: center;
   align-items: center;
