@@ -6,31 +6,25 @@
    2、新增el-form两列和三列布局，主要使用el-row进行个性化布局模拟类表格样式，严格按照demo进行拷贝代码，否则可能会出现样式错乱；
    3、修改Form个性化错误提示,由原先的【输入框底部显示】改成显示在【输入框右侧】提示Icon,移入Icon显示详细错误信息；eg:代码参考[自定义表单错误提示]
    4、修改Radio和checkBox选中样式，实心反转；
-   5、新增Radio和checkBox纵向单选和横向单选样式；eg：使用.vertical控制
+   5、新增Radio和checkBox纵向单选和横向单选样式；eg：使用.eve-common-vertical控制
    6、新增简单上传文件组件;eg:具体逻辑参考源码
    7、Form的颜色样式取自base.scss文件；
    8、新增【全局性修改css】；
    9、新增动态增减【表格类表单】组件。eg:具体逻辑参考源码；
-   10、新增 class="fixed-error"，错误icon显示位置;eg：参考[下拉单选]和[日期选择]两个表单样式
+   10、新增 class="eve-common-fixed-error"，错误icon显示位置;eg：参考[下拉单选]和[日期选择]两个表单样式
    特别说明：
     1、如需修改该模板页的个性化样式，建议自定义class包裹修改样式，不建议直接调整demo页写好的样式；
   @Date: 2021-5-31
   -->
-  <eve-container class="eve-form" padding="20px">
-    <h4 style="margin-bottom: 12px">两列表单</h4>
-    <el-form
-      ref="form"
-      class="eve-common-form"
-      :model="form"
-      :rules="rules"
-      label-width="200px"
-    >
-      <el-row type="flex" class="form-content">
+  <eve-container class="eve-common-form-container" padding="20px">
+    <h4 style="margin-bottom:12px;">两列表单</h4>
+    <el-form ref="form" class="eve-common-form" :model="form" :rules="rules" label-width="200px">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="24">
-          <div class="eve-form__title">两列表单标题-label设置为200px</div>
+          <div class="eve-common-form-title">两列表单标题-label设置为200px</div>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="常规文本框">
             <el-input
@@ -42,22 +36,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item class="fixed-error" label="必填校验" prop="requestText">
-            <el-input
-              class="eve-common-input"
-              :size="size"
-              v-model="form.requestText"
-            />
+          <el-form-item class="eve-common-fixed-error" label="必填校验" prop="requestText">
+            <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
-              <el-tooltip class="eve-form-error-tip" :content="scope.error">
+              <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </template>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="24">
           <el-form-item
             label="长文本长文本长文本长文本长文本长文本长文本长文本长文本"
@@ -71,7 +61,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="24">
           <el-form-item label="文本域">
             <el-input
@@ -86,7 +76,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="密码框">
             <el-input
@@ -108,7 +98,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="数字加减1">
             <el-input-number
@@ -122,21 +112,17 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="带单位">
-            <el-input-number
-              class="eve-common-input-number"
-              :size="size"
-              v-model="form.unitText"
-            />
-            <span class="eve-info-tip">万元</span>
+            <el-input-number class="eve-common-input-number" :size="size" v-model="form.unitText" />
+            <span class="eve-common-info-tip">万元</span>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="横向单选">
             <el-radio-group
               :size="size"
-              class="eve-common-radio-group horizontal"
+              class="eve-common-radio-group eve-common-horizontal"
               v-model="form.horizontalRadio"
             >
               <el-radio label="1">单选按钮1</el-radio>
@@ -149,7 +135,7 @@
           <el-form-item label="横向多选">
             <el-checkbox-group
               :size="size"
-              class="eve-common-checkbox-group horizontal"
+              class="eve-common-checkbox-group eve-common-fixed-error"
               v-model="form.horizontalCheckBox"
             >
               <el-checkbox label="复选框 A"></el-checkbox>
@@ -159,12 +145,12 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="纵向单选">
             <el-radio-group
               :size="size"
-              class="eve-common-radio-group vertical"
+              class="eve-common-radio-group eve-common-vertical"
               v-model="form.verticalRadio"
             >
               <el-radio label="1">单选按钮1</el-radio>
@@ -177,7 +163,7 @@
           <el-form-item label="纵向多选" prop="verticalCheckBox">
             <el-checkbox-group
               :size="size"
-              class="eve-common-checkbox-group vertical"
+              class="eve-common-checkbox-group eve-common-vertical"
               v-model="form.verticalCheckBox"
             >
               <el-checkbox label="复选框 A"></el-checkbox>
@@ -186,16 +172,16 @@
             </el-checkbox-group>
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
-              <el-tooltip class="eve-form-error-tip" :content="scope.error">
+              <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </template>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
-          <el-form-item class="fixed-error" label="下拉选择" prop="selectText">
+          <el-form-item class="eve-common-fixed-error" label="下拉选择" prop="selectText">
             <el-select
               class="eve-common-select"
               :size="size"
@@ -211,18 +197,14 @@
             </el-select>
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
-              <el-tooltip class="eve-form-error-tip" :content="scope.error">
+              <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </template>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            class="fixed-error"
-            label="下拉多选"
-            prop="selectMultipleText"
-          >
+          <el-form-item class="eve-common-fixed-error" label="下拉多选" prop="selectMultipleText">
             <el-select
               class="eve-common-select"
               :size="size"
@@ -239,14 +221,14 @@
             </el-select>
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
-              <el-tooltip class="eve-form-error-tip" :content="scope.error">
+              <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </template>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="支持搜索下拉选择">
             <el-select
@@ -283,7 +265,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="级联下拉单选">
             <el-cascader
@@ -305,7 +287,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="开关">
             <el-switch
@@ -317,16 +299,12 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="滑块">
-            <el-slider
-              class="eve-common-slider"
-              :size="size"
-              v-model="form.sliderText"
-            ></el-slider>
-            <span class="eve-info-tip">{{ form.sliderText }}</span>
+            <el-slider class="eve-common-slider" :size="size" v-model="form.sliderText"></el-slider>
+            <span class="eve-common-info-tip">{{form.sliderText}}</span>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="日期选择" prop="dateText">
             <el-date-picker
@@ -338,7 +316,7 @@
             ></el-date-picker>
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
-              <el-tooltip class="eve-form-error-tip" :content="scope.error">
+              <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </template>
@@ -360,7 +338,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="月份选择">
             <el-date-picker
@@ -373,7 +351,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item class="fixed-error" label="简单上传" prop="fileText">
+          <el-form-item class="eve-common-fixed-error" label="简单上传" prop="fileText">
             <el-input
               class="eve-common-input"
               :size="size"
@@ -397,14 +375,14 @@
             <el-button :size="size" @click="clearUploadTextBtn">清空</el-button>
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
-              <el-tooltip class="eve-form-error-tip" :content="scope.error">
+              <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </template>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="多文件上传">
             <el-upload
@@ -447,12 +425,12 @@
 
     <h4 style="margin: 12px 0">三列表单</h4>
     <el-form ref="form" :model="form" :rules="rules" label-width="160px">
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="24">
-          <div class="eve-form__title">三列表单标题-label设置为160px</div>
+          <div class="eve-common-form-title">三列表单标题-label设置为160px</div>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="8">
           <el-form-item label="常规文本框">
             <el-input
@@ -474,22 +452,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item class="fixed-error" label="必填校验" prop="requestText">
-            <el-input
-              class="eve-common-input"
-              :size="size"
-              v-model="form.requestText"
-            />
+          <el-form-item class="eve-common-fixed-error" label="必填校验" prop="requestText">
+            <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
-              <el-tooltip class="eve-form-error-tip" :content="scope.error">
+              <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </template>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="8">
           <el-form-item label="常规文本框">
             <el-input
@@ -511,22 +485,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item class="fixed-error" label="必填校验" prop="requestText">
-            <el-input
-              class="eve-common-input"
-              :size="size"
-              v-model="form.requestText"
-            />
+          <el-form-item class="eve-common-fixed-error" label="必填校验" prop="requestText">
+            <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
-              <el-tooltip class="eve-form-error-tip" :content="scope.error">
+              <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </template>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="8">
           <el-form-item label="常规文本框">
             <el-input
@@ -548,22 +518,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item class="fixed-error" label="必填校验" prop="requestText">
-            <el-input
-              class="eve-common-input"
-              :size="size"
-              v-model="form.requestText"
-            />
+          <el-form-item class="eve-common-fixed-error" label="必填校验" prop="requestText">
+            <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
-              <el-tooltip class="eve-form-error-tip" :content="scope.error">
+              <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </template>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row type="flex" class="form-content">
+      <el-row type="flex" class="eve-common-form-content">
         <el-col :span="12">
           <el-form-item label="常规文本框">
             <el-input
@@ -599,7 +565,7 @@
         <el-table-column label="日期" align="left" width="260">
           <template slot-scope="scope">
             <el-form-item
-              class="fixed-error"
+              class="eve-common-fixed-error"
               :prop="'list.' + scope.$index + '.dateText'"
               :rules="tableRules.dateText"
             >
@@ -612,7 +578,7 @@
               ></el-date-picker>
               <!-- 自定义表单错误提示 -->
               <template slot="error" slot-scope="scope">
-                <el-tooltip class="eve-form-error-tip" :content="scope.error">
+                <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                   <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
               </template>
@@ -622,7 +588,7 @@
         <el-table-column label="姓名" align="left" class-name="must">
           <template slot-scope="scope">
             <el-form-item
-              class="fixed-error"
+              class="eve-common-fixed-error"
               :prop="'list.' + scope.$index + '.name'"
               :rules="tableRules.name"
             >
@@ -633,7 +599,7 @@
               />
               <!-- 自定义表单错误提示 -->
               <template slot="error" slot-scope="scope">
-                <el-tooltip class="eve-form-error-tip" :content="scope.error">
+                <el-tooltip class="eve-common-form-error-tip" :content="scope.error">
                   <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
               </template>
@@ -828,15 +794,15 @@ $eveCommonInputPadding: 0 4px;
 //eve-common-input prefix、suffix图标距离文字间距
 $eveCommonInputPrefixSuffix: 30px;
 
-.eve-form {
+.eve-common-form-container {
   /*********表单[start]*********/
-  .form-content {
+  .eve-common-form-content {
     border: 1px solid $tableBorderColor;
     //解決border重叠只显示1px
     margin: 0px -1px -1px 0px;
   }
   //表单的标题属性
-  .eve-form__title {
+  .eve-common-form-title {
     height: 32px;
     line-height: 32px;
     padding-left: 16px;
@@ -845,7 +811,7 @@ $eveCommonInputPrefixSuffix: 30px;
     font-weight: bolder;
   }
   //带单位描述css
-  .eve-info-tip {
+  .eve-common-info-tip {
     font-size: $--font-size-extra-small;
     color: $--color-info;
     margin-left: 20px;
@@ -876,13 +842,13 @@ $eveCommonInputPrefixSuffix: 30px;
       display: flex;
       align-items: center;
     }
-    .eve-form-error-tip {
+    .eve-common-form-error-tip {
       color: $--color-danger;
       margin-left: 5px;
     }
-    &.fixed-error {
+    &.eve-common-fixed-error {
       /***重***自定义表单错误提示***点***/
-      .eve-form-error-tip {
+      .eve-common-form-error-tip {
         right: 3px;
         //垂直居中css
         position: absolute;
@@ -982,11 +948,11 @@ $eveCommonInputPrefixSuffix: 30px;
   /*********Radio 单选框[start]*********/
   .eve-common-radio-group {
     //横向属性
-    &.horizontal {
+    &.eve-common-horizontal {
       padding: 5px 0;
     }
     //纵向属性-设置为块级元素，并设置上下间距
-    &.vertical .el-radio {
+    &.eve-common-vertical .el-radio {
       padding: 4px 0;
       display: block;
     }
@@ -1013,7 +979,7 @@ $eveCommonInputPrefixSuffix: 30px;
   /*********checkbox复选框[start]*********/
   .eve-common-checkbox-group {
     //纵向属性
-    &.vertical .el-checkbox {
+    &.eve-common-vertical .el-checkbox {
       padding: 4px 0;
       display: block;
     }
