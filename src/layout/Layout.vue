@@ -17,7 +17,6 @@
         <eve-menu
           :data="menuData"
           :collapse="collapse"
-          :width="width"
           ref="menu"
           @select="select"
         >
@@ -159,8 +158,6 @@ export default {
       menuData: [],
       // 面包屑数据(路由非菜单时--详情等特殊情况的路由)
       breadcrumb: [],
-      // 菜单宽度
-      width: 200,
       // 是否收缩
       collapse: false
     }

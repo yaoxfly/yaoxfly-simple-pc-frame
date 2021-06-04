@@ -17,8 +17,14 @@
   @Date: 2021-5-31
   -->
   <eve-container class="eve-form" padding="20px">
-    <h4 style="margin-bottom:12px;">两列表单</h4>
-    <el-form ref="form" class="eve-common-form" :model="form" :rules="rules" label-width="200px">
+    <h4 style="margin-bottom: 12px">两列表单</h4>
+    <el-form
+      ref="form"
+      class="eve-common-form"
+      :model="form"
+      :rules="rules"
+      label-width="200px"
+    >
       <el-row type="flex" class="form-content">
         <el-col :span="24">
           <div class="eve-form__title">两列表单标题-label设置为200px</div>
@@ -27,12 +33,21 @@
       <el-row type="flex" class="form-content">
         <el-col :span="12">
           <el-form-item label="常规文本框">
-            <el-input class="eve-common-input" :size="size" v-model="form.text" placeholder="请输入" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.text"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item class="fixed-error" label="必填校验" prop="requestText">
-            <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.requestText"
+            />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
               <el-tooltip class="eve-form-error-tip" :content="scope.error">
@@ -44,7 +59,9 @@
       </el-row>
       <el-row type="flex" class="form-content">
         <el-col :span="24">
-          <el-form-item label="长文本长文本长文本长文本长文本长文本长文本长文本长文本">
+          <el-form-item
+            label="长文本长文本长文本长文本长文本长文本长文本长文本长文本"
+          >
             <el-input
               class="eve-common-input"
               :size="size"
@@ -82,7 +99,12 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="带清空">
-            <el-input class="eve-common-input" :size="size" v-model="form.clearText" clearable />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.clearText"
+              clearable
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -100,7 +122,11 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="带单位">
-            <el-input-number class="eve-common-input-number" :size="size" v-model="form.unitText" />
+            <el-input-number
+              class="eve-common-input-number"
+              :size="size"
+              v-model="form.unitText"
+            />
             <span class="eve-info-tip">万元</span>
           </el-form-item>
         </el-col>
@@ -192,7 +218,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item class="fixed-error" label="下拉多选" prop="selectMultipleText">
+          <el-form-item
+            class="fixed-error"
+            label="下拉多选"
+            prop="selectMultipleText"
+          >
             <el-select
               class="eve-common-select"
               :size="size"
@@ -278,13 +308,21 @@
       <el-row type="flex" class="form-content">
         <el-col :span="12">
           <el-form-item label="开关">
-            <el-switch class="eve-common-switch" :size="size" v-model="form.switchText"></el-switch>
+            <el-switch
+              class="eve-common-switch"
+              :size="size"
+              v-model="form.switchText"
+            ></el-switch>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="滑块">
-            <el-slider class="eve-common-slider" :size="size" v-model="form.sliderText"></el-slider>
-            <span class="eve-info-tip">{{form.sliderText}}</span>
+            <el-slider
+              class="eve-common-slider"
+              :size="size"
+              v-model="form.sliderText"
+            ></el-slider>
+            <span class="eve-info-tip">{{ form.sliderText }}</span>
           </el-form-item>
         </el-col>
       </el-row>
@@ -315,7 +353,7 @@
               :picker-options="{
                 start: '08:30',
                 step: '00:15',
-                end: '18:30'
+                end: '18:30',
               }"
               placeholder="选择时间"
             ></el-time-select>
@@ -343,13 +381,19 @@
               v-model="form.fileText"
               placeholder="未选择任何文件"
             />
-            <input ref="inputUploadFile" type="file" @change="uploadChange" style="display:none" />
+            <input
+              ref="inputUploadFile"
+              type="file"
+              @change="uploadChange"
+              style="display: none"
+            />
             <el-button
               type="primary"
               :size="size"
-              style="margin-left:12px;"
+              style="margin-left: 12px"
               @click="uploadTextBtn"
-            >上传</el-button>
+              >上传</el-button
+            >
             <el-button :size="size" @click="clearUploadTextBtn">清空</el-button>
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
@@ -375,7 +419,9 @@
               :file-list="fileList"
             >
               <el-button :size="size" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              <div slot="tip" class="el-upload__tip">
+                只能上传jpg/png文件，且不超过500kb
+              </div>
             </el-upload>
           </el-form-item>
         </el-col>
@@ -390,14 +436,16 @@
               list-type="picture"
             >
               <el-button :size="size" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              <div slot="tip" class="el-upload__tip">
+                只能上传jpg/png文件，且不超过500kb
+              </div>
             </el-upload>
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
 
-    <h4 style="margin:12px 0;">三列表单</h4>
+    <h4 style="margin: 12px 0">三列表单</h4>
     <el-form ref="form" :model="form" :rules="rules" label-width="160px">
       <el-row type="flex" class="form-content">
         <el-col :span="24">
@@ -407,17 +455,31 @@
       <el-row type="flex" class="form-content">
         <el-col :span="8">
           <el-form-item label="常规文本框">
-            <el-input class="eve-common-input" :size="size" v-model="form.text" placeholder="请输入" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.text"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="常规文本框">
-            <el-input class="eve-common-input" :size="size" v-model="form.text" placeholder="请输入" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.text"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item class="fixed-error" label="必填校验" prop="requestText">
-            <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.requestText"
+            />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
               <el-tooltip class="eve-form-error-tip" :content="scope.error">
@@ -430,17 +492,31 @@
       <el-row type="flex" class="form-content">
         <el-col :span="8">
           <el-form-item label="常规文本框">
-            <el-input class="eve-common-input" :size="size" v-model="form.text" placeholder="请输入" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.text"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="常规文本框">
-            <el-input class="eve-common-input" :size="size" v-model="form.text" placeholder="请输入" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.text"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item class="fixed-error" label="必填校验" prop="requestText">
-            <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.requestText"
+            />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
               <el-tooltip class="eve-form-error-tip" :content="scope.error">
@@ -453,17 +529,31 @@
       <el-row type="flex" class="form-content">
         <el-col :span="8">
           <el-form-item label="常规文本框">
-            <el-input class="eve-common-input" :size="size" v-model="form.text" placeholder="请输入" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.text"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="常规文本框">
-            <el-input class="eve-common-input" :size="size" v-model="form.text" placeholder="请输入" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.text"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item class="fixed-error" label="必填校验" prop="requestText">
-            <el-input class="eve-common-input" :size="size" v-model="form.requestText" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.requestText"
+            />
             <!-- 自定义表单错误提示 -->
             <template slot="error" slot-scope="scope">
               <el-tooltip class="eve-form-error-tip" :content="scope.error">
@@ -476,21 +566,36 @@
       <el-row type="flex" class="form-content">
         <el-col :span="12">
           <el-form-item label="常规文本框">
-            <el-input class="eve-common-input" :size="size" v-model="form.text" placeholder="请输入" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.text"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="常规文本框">
-            <el-input class="eve-common-input" :size="size" v-model="form.text" placeholder="请输入" />
+            <el-input
+              class="eve-common-input"
+              :size="size"
+              v-model="form.text"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
 
-    <h4 style="margin:12px 0;">动态增减</h4>
+    <h4 style="margin: 12px 0">动态增减</h4>
     <el-form :model="tableForm" :rules="tableRules" ref="tableForm">
       <el-table :data="tableForm.list" border style="width: 100%" :size="size">
-        <el-table-column type="index" label="序号" min-width="20" align="lef"></el-table-column>
+        <el-table-column
+          type="index"
+          label="序号"
+          min-width="20"
+          align="lef"
+        ></el-table-column>
         <el-table-column label="日期" align="left" width="260">
           <template slot-scope="scope">
             <el-form-item
@@ -521,7 +626,11 @@
               :prop="'list.' + scope.$index + '.name'"
               :rules="tableRules.name"
             >
-              <el-input class="eve-common-input" :size="size" v-model="scope.row.name" />
+              <el-input
+                class="eve-common-input"
+                :size="size"
+                v-model="scope.row.name"
+              />
               <!-- 自定义表单错误提示 -->
               <template slot="error" slot-scope="scope">
                 <el-tooltip class="eve-form-error-tip" :content="scope.error">
@@ -534,18 +643,29 @@
         <el-table-column label="地址" align="left">
           <template slot-scope="scope">
             <el-form-item>
-              <el-input class="eve-common-input" :size="size" v-model="scope.row.address" />
+              <el-input
+                class="eve-common-input"
+                :size="size"
+                v-model="scope.row.address"
+              />
             </el-form-item>
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="delRow(scope.row,scope.$index)" :size="size">删除</el-button>
+            <el-button
+              type="text"
+              @click="delRow(scope.row, scope.$index)"
+              :size="size"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
-      <div style="margin:12px auto;text-align:center;">
-        <el-button type="primary" :size="size" @click="addRow()">新增一行</el-button>
+      <div style="margin: 12px auto; text-align: center">
+        <el-button type="primary" :size="size" @click="addRow()"
+          >新增一行</el-button
+        >
       </div>
     </el-form>
   </eve-container>
@@ -783,7 +903,8 @@ $eveCommonInputPrefixSuffix: 30px;
         line-height: 1;
       }
       //改变输入框的默认内边距，前后图标的默认左右边距需要重新设置一下，否则出现图标的时候会出现css异常
-      .el-input--prefix .el-input__inner,.el-input--suffix .el-input__inner {
+      .el-input--prefix .el-input__inner,
+      .el-input--suffix .el-input__inner {
         padding-left: $eveCommonInputPrefixSuffix;
       }
       .el-input__icon {
@@ -829,8 +950,9 @@ $eveCommonInputPrefixSuffix: 30px;
     }
 
     //改变输入框的默认内边距，前后图标的默认左右边距需要重新设置一下，否则出现图标的时候会出现css异常
-    &.el-input--prefix .el-input__inner,.el-input--suffix .el-input__inner {
-      padding-left:$eveCommonInputPrefixSuffix;
+    &.el-input--prefix .el-input__inner,
+    .el-input--suffix .el-input__inner {
+      padding-left: $eveCommonInputPrefixSuffix;
     }
     .el-input__icon {
       line-height: $eveCommonInputHeight;
@@ -848,7 +970,8 @@ $eveCommonInputPrefixSuffix: 30px;
       line-height: 1;
     }
     //改变输入框的默认内边距，前后图标的默认左右边距需要重新设置一下，否则出现图标的时候会出现css异常
-    &.el-input--prefix .el-input__inner,.el-input--suffix .el-input__inner {
+    &.el-input--prefix .el-input__inner,
+    .el-input--suffix .el-input__inner {
       padding-left: $eveCommonInputPrefixSuffix;
     }
     .el-input__icon {

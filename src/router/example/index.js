@@ -1,5 +1,5 @@
 /*
-   路由分层范例-表单页
+   路由分层范例-demo
 */
 //  定义是否是子路由,默认是true
 // export const isChildrenRouter = true
@@ -18,7 +18,24 @@ export default [
                 {
                     icon: 'el-icon-location',
                     type: 'submenu', // type属性必须
-                    text: '一级目录'
+                    text: 'demo'
+                }
+            ]
+        }
+    },
+    {
+        path: '/example',
+        name: 'Example',
+        text: '常用组件',
+        icon: 'el-icon-location',
+        component: () => import('@/views/example/Example.vue'),
+        meta: {
+            // 菜单、面包屑数据
+            menu: [
+                {
+                    icon: 'el-icon-location',
+                    type: 'submenu', // type属性必须
+                    text: 'demo'
                 }
             ]
         }
