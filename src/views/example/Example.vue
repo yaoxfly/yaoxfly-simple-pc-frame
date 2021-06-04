@@ -221,14 +221,16 @@ export default {
   name: 'Example',
   data () {
     return {
+      // 删除的对话框
       deleteMessageBox: {
         content: '代码是写给人看的，顺便在程序里运行',
         text: '删除'
       },
-      active: 0,
-      visible: false,
-      activeName: 'second',
-      pageSize: 20,
+      active: 0, // 步骤条的位置
+      visible: false, // 是否显示对话框
+      activeName: 'second', // 卡片选项卡高亮
+      pageSize: 20, // 分页的页码
+      // 时间线
       activities: [{
         content: '活动按期开始',
         timestamp: '2018-04-15'
@@ -239,6 +241,7 @@ export default {
         content: '创建成功',
         timestamp: '2018-04-11'
       }],
+      // 树的数据
       treeData: [
         {
           id: 1,
@@ -291,6 +294,8 @@ export default {
           }]
         }
       ],
+      /* ----表格----- */
+      // 表头
       columns: [
         {
           label: 'Name',
@@ -321,6 +326,7 @@ export default {
           width: 285
         }
       ],
+      // 表格
       tableData: [
         {
           id: 1,
@@ -434,6 +440,7 @@ export default {
         }
       ],
 
+      // 表格按钮
       button: [
         {
           value: '新增',
@@ -459,22 +466,24 @@ export default {
 
   mounted () { },
   methods: {
+
+    // 表格上的按钮的点击事件
     btnOperate (emit) {
       console.log(emit)
       // this.visible = !this.visible
     },
+
+    // 分页切换
     currentChange (emit) {
       console.log(emit)
     },
-    click (emit) {
-      console.log(emit)
-    },
-    click2 (emit) {
-      console.log(emit, ';11')
-    },
+
+    // 步骤条 下一步
     next () {
       if (this.active++ > 2) this.active = 0
     },
+
+    // 打开消息框
     open () {
       this.$alert('这是一段内容', '标题名称', {
         confirmButtonText: '确定',
@@ -486,6 +495,7 @@ export default {
         }
       })
     }
+
   }
 }
 </script>
