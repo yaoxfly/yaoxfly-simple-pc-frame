@@ -1,4 +1,4 @@
-/** @description 多环境配置项
+/** @description 公共配置
  * @author yx
  */
 
@@ -7,7 +7,7 @@ const config = {
   mock: false // 是否开启mock
 }
 
-// 不同环境下的配置
+// 不同环境下的公共配置
 const keyMap = {
   // 开发环境
   development: () => {
